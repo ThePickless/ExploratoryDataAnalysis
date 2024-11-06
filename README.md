@@ -160,6 +160,21 @@ df_spotify[df_spotify.duplicated(["track_name","artist(s)_name"])]
 ***
 
 ### Missing Value
+```python
+missing_values = df_spotify.isna().sum()
+
+print("The attributes that have missing values in the dataset are ")
+print()
+print(missing_values[missing_values>0])
+```
+![image](https://github.com/user-attachments/assets/ce5c6f23-e518-4ebf-abcc-b8d93a127376)
+
+
+
+
+
+
+
 
 
 
