@@ -203,6 +203,205 @@ df_spotify.isna().sum()
 
 ### Basic Descriptive
 
+1. What are the mean, median, and standard deviation of the streams column?
+
+```python
+f"The total streams of the most streamed spotify songs of 2023 is {df_spotify['streams'].sum()}"
+```
+![image](https://github.com/user-attachments/assets/799b88f3-7a47-4d1e-8a0a-9ede62412021)
+
+```python
+f"The mean of the total streams of the most streamed spotify songs of 2023 is {df_spotify['streams'].mean()}"
+```
+![image](https://github.com/user-attachments/assets/9d9fef89-352c-4ed1-b706-8ff3a71acdaa)
+
+```python
+f"The median of the total streams of the most streamed spotify songs of 2023 is {df_spotify['streams'].median()}"
+```
+![image](https://github.com/user-attachments/assets/73f922d3-af0e-43fa-b66b-95ac83ec1043)
+
+```python
+f"The standard deviation of the total streams of the most streamed spotify songs of 2023 is {df_spotify['streams'].std()}"
+```
+![image](https://github.com/user-attachments/assets/54c5702e-9255-4527-95e8-8bc7f76113eb)
+
+
+```python
+df_spotify[['track_name', 'streams']].sort_values(by='streams', ascending=False).head(10)
+```
+![image](https://github.com/user-attachments/assets/8a0350e3-d08b-468f-9130-a6dceace994f)
+
+```python
+sns.histplot(df_spotify, x= 'streams',color='blue', element="poly").set(title = 'Distribution of total streams')
+sns.set_style("whitegrid", {'grid.linestyle': '--'})
+
+plt.xlabel('Number of Streams by Billions')
+plt.ylabel('Number of Tracks')
+```
+![image](https://github.com/user-attachments/assets/8c9b9db1-22c0-4585-bcc7-005a4496d3ea)
+
+```python
+# Create the displot for the 'released_year' column
+ryd = sns.displot(df_spotify, x='released_year', color='blue', discrete=True, aspect=3)
+
+# Set the title for the plot
+ryd.fig.suptitle("Distribution of the Most Streamed Spotify Songs of 2023 by Released Year", fontsize=16)
+
+# Get the underlying axis to customize further
+ax = ryd.ax
+
+# Add gridlines along the y-axis
+ax.grid(True, axis="y", color="gray", alpha=0.5)
+
+# Set the labels for x and y axes
+ax.set_xlabel('Track Release Year', fontsize=12)
+ax.set_ylabel('Number of Tracks', fontsize=12)
+
+# Adjust layout to avoid overlap (especially with long titles)
+plt.tight_layout()
+
+# Show the plot
+plt.show()
+```
+![image](https://github.com/user-attachments/assets/580b154c-f01b-4a15-aff9-1158036884a2)
+
+```python
+# Calculate first quartile (25th percentile)
+Q1ry = df_spotify['released_year'].quantile(0.25)
+
+# Calculate third quartile (75th percentile)
+Q3ry = df_spotify['released_year'].quantile(0.75)
+
+# Calculate Interquartile Range (IQR)
+IQRry = Q3ry - Q1ry
+
+# Identify outliers: values outside the range (Q1 - 1.5 * IQR) and (Q3 + 1.5 * IQR)
+outliers_ry = df_spotify[(df_spotify['released_year'] < Q1ry - 1.5 * IQRry) | (df_spotify['released_year'] > Q3ry + 1.5 * IQRry)]
+
+# Get the number of outliers
+ry_outliers_num = outliers_ry.shape[0]
+
+# Return the message about outliers
+outlier_message = f"There are about {ry_outliers_num} outliers in the release year of tracks."
+
+# Optionally, display the outliers for further inspection
+outliers_ry.head()  # Show the first few rows of the outliers for inspection (optional)
+
+# Display the outlier message
+outlier_message
+```
+![image](https://github.com/user-attachments/assets/4c7073da-799e-457a-bf28-96b4134b2d61)
+
+```python
+plt.figure(figsize=(15, 5))
+# To size the boxplots
+
+sns.boxplot(x=df_spotify['released_year'], fliersize=3)
+# Creates boxplot and resize the outlier data points
+
+plt.title("Track Release Year Boxplot") 
+# Sets title for the boxplot
+plt.xlabel("Track Release Year")
+# Labels x-axis
+plt.show()
+```
+![image](https://github.com/user-attachments/assets/fe27f65f-982b-4e89-9b36-25049c986e21)
+
+```python
+ac = sns.displot(df_spotify, x='artist_count', color='Blue', discrete=True).set(title = "Distribution of the number of credited artists per track")
+# To plot the distrbution of the released_year along with its distribution line, and each year being represented
+# To plot the distrbution of the released_year along with its distribution line, and each artist count being represented
+# also labels title
+
+sns.set_style("white")
+
+ax = ac.ax
+ax.grid(True, axis="y", color="gray", alpha=0.5)
+# to place grids along the x_axis
+
+plt.xlabel('Number of Credited Artists')
+plt.ylabel('Number of Tracks')
+# labels x and y axes
+```
+![image](https://github.com/user-attachments/assets/c43ed6e2-ae7d-4018-ac7d-fd8275cb0ccb)
+
+```python
+Q1ac = df_spotify['artist_count'].quantile(0.25)
+Q3ac = df_spotify['artist_count'].quantile(0.75)
+IQRac = Q3ac - Q1ac
+
+# Equation for finding outliers within a given data
+outliers_ac = df_spotify[(df_spotify['artist_count'] < Q1ac - 1.5 * IQRac) | (df_spotify['artist_count'] > Q3ac + 1.5 * IQRac)]
+ac_outliers_num = outliers_ac.shape[0]
+f"There are about {ac_outliers_num} outliers within the release year attributes of the tracks."
+```
+![image](https://github.com/user-attachments/assets/1d3a1d99-4546-4523-b2a1-acff17ef751f)
+
+```python
+plt.figure(figsize=(15, 5))
+# To size the boxplots
+
+sns.boxplot(x=df_spotify['artist_count'], fliersize=3)
+# Creates boxplot and resize the outlier data points
+
+plt.title("Number of Credited Artist Per Track Boxplot") 
+# Sets title for the boxplot
+plt.xlabel("Track Release Year")
+# Labels x-axis
+plt.show()
+```
+![image](https://github.com/user-attachments/assets/15514dc9-4d3f-405e-af08-131dd2ee00ec)
+
+***
+
+### Top Performers
+
+1. Which track has the highest number of streams? Display the top 5 most streamed tracks.
+
+```python
+df_spotify[['track_name', 'artist(s)_name','streams']].sort_values(by='streams', ascending=False).head()
+# it sorts the data from greatest to least streams
+# it locates and print the first 5 songs along with its track name and the number of streams
+```
+![image](https://github.com/user-attachments/assets/f385c347-ef44-435d-aff1-9d7bfe5eb280)
+
+```python
+df_spotify['artist(s)_name'] = df_spotify['artist(s)_name'].str.split(',')
+df_spotify['artist(s)_name']
+# turns all the artists into a list and splits all of them with a column
+```
+![image](https://github.com/user-attachments/assets/ea8d4350-4ee8-4bf5-ba5f-3648bbce200e)
+
+```python
+df_spotify = df_spotify.explode('artist(s)_name').reset_index(drop=True)
+df_spotify['artist(s)_name'] = df_spotify['artist(s)_name'].str.strip()
+df_spotify
+# The .explode() makes it so that the list is counted as a row, we also reset index for cleaner analaysis
+# The list of the seperated names in now stored in the column of the artist(s)_name
+# The result can be seen below
+```
+![image](https://github.com/user-attachments/assets/0c2afc94-62d5-4718-a8aa-130b3006a59d)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
