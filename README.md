@@ -170,6 +170,46 @@ print(missing_values[missing_values>0])
 ![image](https://github.com/user-attachments/assets/ce5c6f23-e518-4ebf-abcc-b8d93a127376)
 
 
+```python
+shazam_median = df_spotify['in_shazam_charts'].median()
+f"The median value of the 'in_shazam_charts' is {shazam_median}"
+```
+
+![image](https://github.com/user-attachments/assets/e49c2864-09ed-462d-a36a-f1b84ff6dd26)
+
+```python
+missing_values = df_spotify.isna().sum()
+print("The updated missing values are now ")
+print()
+print(missing_values[missing_values>0])
+```
+
+![image](https://github.com/user-attachments/assets/0b1dde73-69f2-4c5c-9219-7eda27c68597)
+
+```python
+shazam_median = df_spotify['in_shazam_charts'].median()
+f"The median value of the 'in_shazam_charts' is {shazam_median}"
+```
+
+![image](https://github.com/user-attachments/assets/f10f82c1-eae8-49f5-aa38-f328b116f54c)
+
+```python
+df_spotify.isna().sum()
+```
+
+![image](https://github.com/user-attachments/assets/1ae8f11a-db01-49a9-a9bb-7fec2a2a8b4f)
+
+***
+
+### Basic Descriptive
+
+
+
+
+
+
+
+
 
 
 
