@@ -229,6 +229,9 @@ f"The standard deviation of the total streams of the most streamed spotify songs
 ```python
 df_spotify[['track_name', 'streams']].sort_values(by='streams', ascending=False).head(10)
 ```
+
+2. What is the distribution of released_year and artist_count? Are there any noticeable trends or outliers?
+
 ![image](https://github.com/user-attachments/assets/8a0350e3-d08b-468f-9130-a6dceace994f)
 
 ```python
@@ -382,7 +385,8 @@ df_spotify
 ```
 ![image](https://github.com/user-attachments/assets/0c2afc94-62d5-4718-a8aa-130b3006a59d)
 
-### Top 5 most played artist based on number of songs/albums
+2. Who are the top 5 most frequent artists based on the number of tracks in the dataset?
+
 ```python
 df_spotify['artist_name'].value_counts().head()
 ```
@@ -407,7 +411,7 @@ plt.title('Number of Tracks Released Per Month')
 ```
 ![image](https://github.com/user-attachments/assets/acaf5ccc-ebfe-4409-a6e5-03bbb89f3a45)
 
-##### Releases over the month
+2. Does the number of tracks released per month follow any noticeable patterns? Which month sees the most releases?
 
 ```python
 sns.displot(data=df_spotify, x='released_month', element='poly', fill=False, discrete=True, aspect = 3)
@@ -432,6 +436,50 @@ plt.show()
 ***
 
 ### Genre and Music Characteristics
+
+1. Examine the correlation between streams and musical attributes like bpm, danceability_%, and energy_%. Which attributes seem to influence streams the most?
+
+```python
+#obtain correlations between streams and the given musical attributrs
+correlationstreams = df_spotify[['streams', 'bpm', 'danceability_%', 'energy_%']].corr()['streams'].drop('streams')
+
+print("Correlation of Streams with Musical Attributes: \n")
+print(correlationstreams)
+```
+![image](https://github.com/user-attachments/assets/577f23bf-cda1-4e4a-98c2-2a9863952089)
+
+2. Is there a correlation between danceability_% and energy_%? How about valence_% and acousticness_%?
+
+```python
+#get correlation between danceability_% and energy_%
+danceability_energy_corr = df_spotify['danceability_%'].corr(df_spotify['energy_%'])
+print(f"Correlation between Danceability % and Energy %: {danceability_energy_corr:.2f}")
+
+#get correlation between valence_% and acousticness_%
+valence_acousticness_corr = df_spotify['valence_%'].corr(df_spotify['acousticness_%'])
+print(f"Correlation between Valence % and Acousticness %: {valence_acousticness_corr:.2f}")
+```
+![image](https://github.com/user-attachments/assets/8748572c-5567-4830-9d2c-69330d8db103)
+
+```python
+#graph the correlation for the attributes
+attributes = df_spotify[['streams', 'bpm', 'danceability_%', 'energy_%', 'valence_%', 'acousticness_%']]
+correlation_matrix = attributes.corr()
+
+#create and plot using heatmap to observe the correlations 
+plt.figure(figsize=(10, 8))
+sns.heatmap(correlation_matrix, annot=True, vmin = -1, vmax = 1, cmap='BuPu')
+plt.title("Correlation Heatmap of Streams and the different Musical Atrributes")
+plt.show()
+```
+![image](https://github.com/user-attachments/assets/9995c059-01eb-464f-aadb-4c6e7e601782)
+
+### Platform Popularity
+
+
+
+
+
 
 
 
