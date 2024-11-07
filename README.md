@@ -474,7 +474,295 @@ plt.show()
 ```
 ![image](https://github.com/user-attachments/assets/9995c059-01eb-464f-aadb-4c6e7e601782)
 
+***
+
 ### Platform Popularity
+
+1. How do the numbers of tracks in spotify_playlists, spotify_charts, and apple_playlists compare? Which platform seems to favor the most popular tracks?
+
+```python
+track_platform_selected = ['in_spotify_playlists', 'in_spotify_charts', 'in_apple_playlists']
+
+# Sum the occurrences of tracks across the selected platforms
+platform_counts = df_spotify[track_platform_selected].sum()
+
+# Create a bar plot for the summed occurrences of tracks
+plt.figure(figsize=(10, 6))
+sns.barplot(x=platform_counts.index, y=platform_counts.values, palette='viridis')
+
+# Apply a logarithmic scale to the y-axis to deal with large range of occurrences
+plt.yscale('log')
+
+# Title and axis labels
+plt.title("Selected Platform Statistics vs. Number of Occurring Tracks", fontsize=14)
+plt.xlabel("Selected Platform", fontsize=12)
+plt.ylabel("Total Number of Occurrences (Log Scale)", fontsize=12)
+
+# Display the plot
+plt.tight_layout()  # Adjust layout for better spacing
+plt.show()
+```
+![image](https://github.com/user-attachments/assets/5f5a8373-e98f-4e21-9e66-aa597177c426)
+
+```python
+track_platform_selected = ['in_spotify_playlists', 'in_spotify_charts', 'in_apple_playlists']
+
+# Calculate the mean of occurrences for each platform
+platform_means = df_spotify[track_platform_selected].mean()
+
+# Create a bar plot for the mean occurrences of tracks
+plt.figure(figsize=(10, 6))
+sns.barplot(x=platform_means.index, y=platform_means.values, palette='viridis')
+
+# Apply a logarithmic scale to the y-axis to deal with large range of occurrences
+plt.yscale('log')
+
+# Title and axis labels
+plt.title("Selected Platform Statistics vs. Mean of Number of Occurring Tracks", fontsize=14)
+plt.xlabel("Selected Platform", fontsize=12)
+plt.ylabel("Mean Number of Occurrences (Log Scale)", fontsize=12)
+
+# Display the plot
+plt.tight_layout()  # Adjust layout for better spacing
+plt.show()
+```
+![image](https://github.com/user-attachments/assets/af22b8d1-7f85-4267-aa5e-3c87b9e3f1ea)
+
+```python
+# List of selected platform charts
+track_platform_charts = ['in_spotify_charts', 'in_apple_charts', 'in_deezer_charts', 'in_shazam_charts']
+
+# Calculate the mean of occurrences for each chart platform
+chart_means = df_spotify[track_platform_charts].mean()
+
+# Create a bar plot for the mean occurrences of tracks in platform charts
+plt.figure(figsize=(10, 6))  # Set the figure size
+sns.barplot(x=chart_means.index, y=chart_means.values, palette='viridis')
+
+# Set title and axis labels
+plt.title("Mean of Selected Platform Charts", fontsize=14)
+plt.xlabel("Platform Charts", fontsize=12)
+plt.ylabel("Mean Number of Occurrences", fontsize=12)
+
+# Display the plot
+plt.tight_layout()  # Adjust layout for better spacing
+plt.show()
+```
+![image](https://github.com/user-attachments/assets/c3e8622c-f800-4ef8-b202-f26dd0f23187)
+
+### Comparison of number of tracks/songs in playlist of platforms
+
+```python
+# List of selected platform playlists
+track_platform_playlists = ['in_spotify_playlists', 'in_apple_playlists', 'in_deezer_playlists']
+
+# Calculate the total occurrences of tracks for each platform
+platform_playlist_totals = df_spotify[track_platform_playlists].sum()
+
+# Create a bar plot for the total occurrences of tracks in platform playlists
+plt.figure(figsize=(10, 6))  # Set the figure size
+sns.barplot(x=platform_playlist_totals.index, y=platform_playlist_totals.values, palette='viridis')
+
+# Set title and axis labels
+plt.title("Playlists vs Total Number of Occurring Tracks", fontsize=14)
+plt.xlabel("Platform Playlists", fontsize=12)
+plt.ylabel("Number of Occurring Tracks (in Millions)", fontsize=12)
+
+# Display the plot
+plt.tight_layout()  # Adjust layout for better spacing
+plt.show()
+```
+![image](https://github.com/user-attachments/assets/dd36c4d7-bb38-4ab2-b434-c25de979a8ec)
+
+```python
+# List of selected platform playlists
+track_platform_playlists = ['in_spotify_playlists', 'in_apple_playlists', 'in_deezer_playlists']
+
+# Calculate the mean occurrences for each platform
+platform_playlist_means = df_spotify[track_platform_playlists].mean()
+
+# If you want to display the values in millions (optional), divide by 1,000,000
+platform_playlist_means /= 1_000_000  # Convert to millions
+
+# Create a bar plot for the mean occurrences of tracks in platform playlists
+plt.figure(figsize=(10, 6))  # Set the figure size
+sns.barplot(x=platform_playlist_means.index, y=platform_playlist_means.values, palette='viridis')
+
+# Set title and axis labels
+plt.title("Playlists vs Number of Tracks (Mean)", fontsize=14)
+plt.xlabel("Platform Playlists", fontsize=12)
+plt.ylabel("Mean Number of Occurring Tracks (in Millions)", fontsize=12)
+
+# Display the plot
+plt.tight_layout()  # Adjust layout for better spacing
+plt.show()
+```
+![image](https://github.com/user-attachments/assets/464e0dc7-77d0-45ff-88b4-70dc5edb91fd)
+
+### Advanced Analysis
+
+1. Based on the streams data, can you identify any patterns among tracks with the same key or mode (Major vs. Minor)?
+```python
+# Grouping by 'key' and counting the number of tracks per key
+df_key_counts = pd.DataFrame(df_spotify.groupby("key").size())
+
+# Sort by the 'key' alphabetically (or by number of tracks if preferred)
+df_key_counts = df_key_counts.sort_values(by=0, ascending=False).reset_index()
+
+# Renaming the second column to 'number_of_tracks'
+df_key_counts = df_key_counts.rename(columns={0: 'number_of_tracks'})
+
+# Filter out 'Missing' and NaN keys
+df_key_counts = df_key_counts[df_key_counts['key'] != 'Missing']
+df_key_counts = df_key_counts[df_key_counts['key'].notna()]
+
+# Display the cleaned and sorted DataFrame
+df_key_counts
+```
+![image](https://github.com/user-attachments/assets/3f8b6e7a-390e-4743-87d0-b385fb2fd477)
+
+```python
+# Create the barplot
+plt.figure(figsize=(12, 6))  # Set the figure size for better readability
+sns.barplot(x='key', y='number_of_tracks', data=df_key_counts, palette='Set2')
+
+# Add title and axis labels
+plt.title("Key Count Barplot", fontsize=16)
+plt.xlabel("Keys", fontsize=12)
+plt.ylabel("Number of Tracks", fontsize=12)
+
+# Display the plot
+plt.tight_layout()
+plt.show()
+```
+![image](https://github.com/user-attachments/assets/46be028e-b9e5-42af-a31d-45e1038fc35e)
+
+### Minor vs Major
+```python
+# Group by 'mode' and count the number of tracks per mode
+df_mode_counts = pd.DataFrame(df_spotify.groupby("mode").size())
+
+# Sort the DataFrame by the number of tracks in descending order
+df_mode_counts = df_mode_counts.sort_values(by=0, ascending=False).reset_index()
+
+# Rename the second column to 'number_of_tracks'
+df_mode_counts = df_mode_counts.rename(columns={0: 'number_of_tracks'})
+
+# Optionally, filter out missing values or any invalid modes if needed
+df_mode_counts = df_mode_counts[df_mode_counts['mode'].notna()]
+
+# Display the resulting DataFrame
+df_mode_counts
+```
+![image](https://github.com/user-attachments/assets/cc3a94fb-43df-494e-b1e4-2295bc0f1ab8)
+
+```python
+sns.barplot(df_mode_counts, x = 'mode', y = 'number_of_tracks', palette='Set2')
+# Creates mode vs. number of tracks barplot and colors it
+
+plt.title("Mode vs. Total Tracks Barplot")
+plt.xlabel("Mode")
+plt.ylabel("Number of Tracks")
+# Labels the plot's title, x-title, and y-title
+```
+![image](https://github.com/user-attachments/assets/a7980a83-36ae-4725-a21b-1e7e3bb9bcc7)
+
+2. Do certain genres or artists consistently appear in more playlists or charts? Perform an analysis to compare the most frequently appearing artists in playlists or charts.
+```python
+# Define the platform columns that represent the presence of the artist in playlists
+platform_playlists = ['in_spotify_playlists', 'in_apple_playlists', 'in_deezer_playlists']
+
+# Group by artist name and sum the occurrences in playlists across platforms
+df_artist_playlists = df_spotify.groupby('artist_name')[platform_playlists].sum()
+
+# Create a total column by summing across the selected platforms for sorting purposes
+df_artist_playlists['total_occurrences'] = df_artist_playlists[platform_playlists].sum(axis=1)
+
+# Sort by the total occurrences in playlists across all platforms from greatest to least
+df_artist_playlists = df_artist_playlists.sort_values(by='total_occurrences', ascending=False).reset_index()
+
+# Select the relevant columns to display: artist name and occurrences across platforms
+df_artist_playlists[['artist_name', 'in_spotify_playlists', 'in_apple_playlists', 'in_deezer_playlists', 'total_occurrences']].head()
+```
+![image](https://github.com/user-attachments/assets/d78d9f5f-6e9e-42fb-b5a6-8271d545560c)
+
+```python
+# Create subplots for 3 bar plots (Spotify, Apple Music, Deezer)
+fig, axes = plt.subplots(ncols=3, figsize=(20, 6))
+
+# Sort the DataFrame by 'in_spotify_playlists' and plot top 5 artists
+sns.barplot(data=df_artist_playlists.sort_values('in_spotify_playlists', ascending=False).head(5), 
+            x='artist_name', y='in_spotify_playlists', palette='Set2', ax=axes[0])
+axes[0].set(title='Artist vs. Occurrence in Spotify Playlists',
+            xlabel='Top Occurring Artists', ylabel='Number of Occurrences')
+
+# Sort the DataFrame by 'in_apple_playlists' and plot top 5 artists
+sns.barplot(data=df_artist_playlists.sort_values('in_apple_playlists', ascending=False).head(5),
+            x='artist_name', y='in_apple_playlists', palette='Set2', ax=axes[1])
+axes[1].set(title='Artist vs. Occurrence in Apple Music Playlists',
+            xlabel='Top Occurring Artists', ylabel='Number of Occurrences')
+
+# Sort the DataFrame by 'in_deezer_playlists' and plot top 5 artists
+sns.barplot(data=df_artist_playlists.sort_values('in_deezer_playlists', ascending=False).head(5),
+            x='artist_name', y='in_deezer_playlists', palette='Set2', ax=axes[2])
+axes[2].set(title='Artist vs. Occurrence in Deezer Playlists',
+            xlabel='Top Occurring Artists', ylabel='Number of Occurrences')
+
+# Adjust the layout to prevent overlapping text
+plt.tight_layout()
+
+# Show the plots
+plt.show()
+```
+![image](https://github.com/user-attachments/assets/50c620b4-7d12-4882-8e8b-c7df54e98a2a)
+
+```python
+df_total_playlists.head(10)
+#get artsits with most plays
+```
+![image](https://github.com/user-attachments/assets/28218cd7-b62a-4556-a2eb-768499d65dc3)
+
+```python
+# Create a barplot for the top 10 artists based on total playlists
+plt.figure(figsize=(12, 6))
+sns.barplot(x='artist_name', y='total_playlists', data=df_total_playlists.head(10), palette='Set2')
+
+# Add title and labels
+plt.title("Top 10 Artists by Total Playlist Occurrences Across Platforms", fontsize=16)
+plt.xlabel("Artist Name", fontsize=12)
+plt.ylabel("Total Playlist Occurrences", fontsize=12)
+
+# Rotate x-axis labels for better readability
+plt.xticks(rotation=45)
+
+# Adjust layout to prevent label overlap
+plt.tight_layout()
+
+# Show the plot
+plt.show()
+```
+![image](https://github.com/user-attachments/assets/26aa48f6-c60e-4950-85da-36aec4912d11)
+***
+
+### Summary of statistics 
+```python
+### describe the given dataset
+summary_statistics = df_spotify.describe()
+summary_statistics
+```
+![image](https://github.com/user-attachments/assets/081788cb-a7b9-42ab-82c8-daccb6480a28)
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
