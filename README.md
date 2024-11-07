@@ -382,6 +382,62 @@ df_spotify
 ```
 ![image](https://github.com/user-attachments/assets/0c2afc94-62d5-4718-a8aa-130b3006a59d)
 
+### Top 5 most played artist based on number of songs/albums
+```python
+df_spotify['artist_name'].value_counts().head()
+```
+![image](https://github.com/user-attachments/assets/1970cc42-8909-40a0-8599-6096519eb6bd)
+
+***
+
+### Temporal trends
+
+1. Analyze the trends in the number of tracks released over time. Plot the number of tracks released per year
+
+##### Number and month or releases
+
+```python
+sns.displot(data=df_spotify, x='released_year', element='poly', fill=False, discrete=True, aspect = 3)
+# plots the tracks released vs the year it was released
+
+plt.xlabel('Months')
+plt.ylabel('Number of Tracks Released')
+plt.title('Number of Tracks Released Per Month')
+# labels the different parts of the plot such as the x-axis, y-axis, and the title
+```
+![image](https://github.com/user-attachments/assets/acaf5ccc-ebfe-4409-a6e5-03bbb89f3a45)
+
+##### Releases over the month
+
+```python
+sns.displot(data=df_spotify, x='released_month', element='poly', fill=False, discrete=True, aspect = 3)
+# plots the tracks released vs the months it was released on
+sns.set_style("whitegrid", {'grid.linestyle': '--'})
+
+plt.xlabel('Months')
+plt.ylabel('Number of Tracks Released')
+plt.title('Number of Tracks Released Per Month')
+# labels the different parts of the plot such as the x-axis, y-axis, and the title
+
+
+plt.xticks(ticks=range(1, 13), labels=[calendar.month_name[i] for i in range(1, 13)])
+# uses calendar library to name the months for the x-axis
+
+plt.xlim(1, 12)
+# shows all the months
+plt.show()
+```
+![image](https://github.com/user-attachments/assets/38051db5-04fc-46d4-b07a-fc56d8881e78)
+
+***
+
+### Genre and Music Characteristics
+
+
+
+
+
+
 
 
 
