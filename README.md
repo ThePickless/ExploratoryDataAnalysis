@@ -21,6 +21,7 @@ import calendar
 2. What are the data types of each column? Are there any missing values?
 
 ```python
+#Load given dataset
 df_spotify = pd.read_csv('spotify-2023 (2).csv', encoding='ISO-8859-1')
 df_spotify
 ```
@@ -53,6 +54,7 @@ df_spotify['streams']
 ![image](https://github.com/user-attachments/assets/fd65b566-d9a5-480b-a297-c6ca83982fc3)
 
 ```python
+# Locate row 574
 df_spotify['streams'].iloc[574]
 ```
 
@@ -99,12 +101,14 @@ print(duplicate_tracks[['track_name','artist(s)_name']])
 
 ### For 'SPIT IN MY FACE'
 ```python
+# Locate track 'SPIT IN MY FACE'
 df_spotify.loc[(df_spotify['track_name']=='SPIT IN MY FACE!')]
 ```
 
 ![image](https://github.com/user-attachments/assets/76b311e8-44f4-4364-85f6-6c88d660cfca)
 
 ```python
+# Remove duplicate
 df_spotify.drop(index=345, inplace=True)
 df_spotify.loc[(df_spotify['track_name']=='SPIT IN MY FACE!')]
 ```
@@ -113,12 +117,14 @@ df_spotify.loc[(df_spotify['track_name']=='SPIT IN MY FACE!')]
 
 ### For 'Take my breath'
 ```python
+#Locate track 'TAKE MY BREATH'
 df_spotify.loc[(df_spotify['track_name']=='Take My Breath')]
 ```
 
 ![image](https://github.com/user-attachments/assets/00b0c7f0-68bc-4848-8ca3-8d79d80b9dfa)
 
 ```python
+#Remove duplicate
 df_spotify.drop(index=512, inplace=True)
 df_spotify.loc[(df_spotify['track_name']=='Take My Breath')]
 ```
@@ -127,12 +133,14 @@ df_spotify.loc[(df_spotify['track_name']=='Take My Breath')]
 
 ### For 'About Damn Time'
 ```python
+#Locate track 'About Damn Time'
 df_spotify.loc[(df_spotify['track_name']=='About Damn Time')]
 ```
 
 ![image](https://github.com/user-attachments/assets/0ffe806b-0707-44fc-b37c-46db484dff83)
 
 ```python
+#Remove Duplicate
 df_spotify.drop(index=372, inplace=True)
 df_spotify.loc[(df_spotify['track_name']=='About Damn Time')]
 ```
@@ -141,12 +149,14 @@ df_spotify.loc[(df_spotify['track_name']=='About Damn Time')]
 
 ### For 'SNAP'
 ```python
+#locate track 'SNAP'
 df_spotify.loc[(df_spotify['track_name']=='SNAP')]
 ```
 
 ![image](https://github.com/user-attachments/assets/002fbb46-4caa-48a7-8c84-6333f9abd4e3)
 
 ```python
+#Remove duplicate
 df_spotify.drop(index=873, inplace=True)
 df_spotify.loc[(df_spotify['track_name']=='SNAP')]
 ```
@@ -154,6 +164,7 @@ df_spotify.loc[(df_spotify['track_name']=='SNAP')]
 ![image](https://github.com/user-attachments/assets/839eb434-16d3-4aca-ab73-eebea42271cb)
 
 ```python
+#Locate tracks with duplicate
 df_spotify[df_spotify.duplicated(["track_name","artist(s)_name"])]
 ```
 
@@ -161,6 +172,7 @@ df_spotify[df_spotify.duplicated(["track_name","artist(s)_name"])]
 
 ### Missing Value
 ```python
+#Locate tracks with missing values
 missing_values = df_spotify.isna().sum()
 
 print("The attributes that have missing values in the dataset are ")
@@ -171,6 +183,7 @@ print(missing_values[missing_values>0])
 
 
 ```python
+#Calculate median of given track
 shazam_median = df_spotify['in_shazam_charts'].median()
 f"The median value of the 'in_shazam_charts' is {shazam_median}"
 ```
@@ -178,6 +191,7 @@ f"The median value of the 'in_shazam_charts' is {shazam_median}"
 ![image](https://github.com/user-attachments/assets/e49c2864-09ed-462d-a36a-f1b84ff6dd26)
 
 ```python
+#Print output of missing values
 missing_values = df_spotify.isna().sum()
 print("The updated missing values are now ")
 print()
@@ -187,6 +201,7 @@ print(missing_values[missing_values>0])
 ![image](https://github.com/user-attachments/assets/0b1dde73-69f2-4c5c-9219-7eda27c68597)
 
 ```python
+#Fill missing values with the median
 shazam_median = df_spotify['in_shazam_charts'].median()
 f"The median value of the 'in_shazam_charts' is {shazam_median}"
 ```
@@ -194,6 +209,7 @@ f"The median value of the 'in_shazam_charts' is {shazam_median}"
 ![image](https://github.com/user-attachments/assets/f10f82c1-eae8-49f5-aa38-f328b116f54c)
 
 ```python
+#Output
 df_spotify.isna().sum()
 ```
 
@@ -206,16 +222,19 @@ df_spotify.isna().sum()
 1. What are the mean, median, and standard deviation of the streams column?
 
 ```python
+#Print total streams
 f"The total streams of the most streamed spotify songs of 2023 is {df_spotify['streams'].sum()}"
 ```
 ![image](https://github.com/user-attachments/assets/799b88f3-7a47-4d1e-8a0a-9ede62412021)
 
 ```python
+#Print mean of the total streams
 f"The mean of the total streams of the most streamed spotify songs of 2023 is {df_spotify['streams'].mean()}"
 ```
 ![image](https://github.com/user-attachments/assets/9d9fef89-352c-4ed1-b706-8ff3a71acdaa)
 
 ```python
+#Print total median of the streams
 f"The median of the total streams of the most streamed spotify songs of 2023 is {df_spotify['streams'].median()}"
 ```
 ![image](https://github.com/user-attachments/assets/73f922d3-af0e-43fa-b66b-95ac83ec1043)
@@ -227,6 +246,7 @@ f"The standard deviation of the total streams of the most streamed spotify songs
 
 
 ```python
+#Print standard deviation of the total streams
 df_spotify[['track_name', 'streams']].sort_values(by='streams', ascending=False).head(10)
 ```
 
