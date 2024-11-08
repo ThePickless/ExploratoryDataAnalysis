@@ -388,7 +388,7 @@ df_spotify
 2. Who are the top 5 most frequent artists based on the number of tracks in the dataset?
 
 ```python
-df_spotify['artist_name'].value_counts().head()
+df_spotify['artist(s)_name'].value_counts().head()
 ```
 ![image](https://github.com/user-attachments/assets/1970cc42-8909-40a0-8599-6096519eb6bd)
 
